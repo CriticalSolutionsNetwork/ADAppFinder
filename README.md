@@ -1,4 +1,5 @@
 # ADAPPFinder Module
+[![PSScriptAnalyzer](https://github.com/CriticalSolutionsNetwork/ADAppFinder/actions/workflows/powershell.yml/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAppFinder/actions/workflows/powershell.yml)
 ## Find-ADHostApp
 ### Synopsis
 Searches AD Computers uninstall registry nodes for input Strings for installed app finding.
