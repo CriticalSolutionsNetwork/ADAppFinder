@@ -4,7 +4,7 @@ Remove-Item ".\output\ADAPPFinder.*.nupkg"
 Remove-Item .\output\ReleaseNotes.md
 Remove-Item .\output\CHANGELOG.md
 .\build.ps1 -tasks build -CodeCoverageThreshold 0
-Remove-Item C:\temp\ADDS* -Recurse
+
 
 .\build.ps1 -ResolveDependency -tasks noop
 
