@@ -95,16 +95,16 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        # Tags = @()
+        Tags = @('ActiveDirectory','Audit','Security')
 
         # A URL to the license for this module.
         # LicenseUri = ''
 
         # A URL to the main website for this project.
-        # ProjectUri = ''
+        ProjectUri   = 'https://github.com/CriticalSolutionsNetwork/ADAppFinder'
 
         # A URL to an icon representing this module.
-        # IconUri = ''
+        IconUri      = 'https://csn-source.s3.us-east-2.amazonaws.com/CSN-Icon.png'
 
         # ReleaseNotes of this module
         ReleaseNotes = '## [0.1.0-fix0001] - 2022-10-30
@@ -148,7 +148,7 @@ PrivateData = @{
  } # End of PrivateData hashtable
 
 # HelpInfo URI of this module
-# HelpInfoURI = ''
+HelpInfoURI = 'https://criticalsolutionsnetwork.github.io/ADAppFinder/'
 
 # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
 # DefaultCommandPrefix = ''
