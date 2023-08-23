@@ -7,7 +7,7 @@ function Get-ADHostManageability {
         [switch]$Servers,
         [switch]$Workstations,
         [String]$OperatingSystemSearchString,
-        [string]$SearchBase
+        [string]$SearchBase = $null
     )
     if ($SearchBase) {
         $Time = (Get-Date).Adddays( - ($DaysInactive))

@@ -1,5 +1,5 @@
 function Find-ADHostApp {
-    <#
+<#
     .SYNOPSIS
         Searches AD Computers uninstall registry nodes for input Strings for installed app finding.
     .DESCRIPTION
@@ -27,7 +27,7 @@ function Find-ADHostApp {
                 Wow6432Node?   : No
                 PSComputerName : pdc-00
                 RunspaceId     : 47d370fb-f095-4bcf-a036-40997cb5af12
-    #>
+#>
     [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     param (
@@ -114,6 +114,13 @@ function Find-ADHostApp {
         [switch]$IncludeWow6432Node
     )
     begin {
+        if (!($script:LogString)) {
+            Write-AuditLog -Start
+        }
+        else {
+            Write-AuditLog -BeginFunction
+        }
+        Write-AuditLog -Message "Starting Find-ADHostApp"
         if ($Report) {
             # Create temp directory if
             [bool]$DirPathCheck = Test-Path -Path $DirPath
@@ -132,30 +139,55 @@ function Find-ADHostApp {
             $computers = $ComputerNames
         } # End if not $ComputerNames
         elseif (($SearchServers) -or ($SearchWorkstations) -or ($SearchOSString)) {
-            $object = Get-ADHostManageability -DaysInactive $DaystoConsiderAHostInactive -Servers $SearchServers -Workstations $SearchWorkstations -OperatingSystemSearchString $SearchOSString
-            $computers = ($object.GetEnumerator()).computerName
-            $NonReachable = ($object.GetEnumerator()).NoRemoteAccess
+            $Params, $NoRemoteAccess = Get-ADHostManageability -DaysInactive $DaystoConsiderAHostInactive -Servers:$SearchServers -Workstations:$SearchWorkstations -OperatingSystemSearchString $SearchOSString
+            if ($params.ComputerName) {
+                $computers = $Params.ComputerName
+                $NonReachable = $NoRemoteAccess.NoRemoteAcces
+            }
+            else {
+                Write-AuditLog "No computers were found to be online. Exiting."
+                break
+            }
         }
         elseif ($SearchBase) {
-            $object = Get-ADHostManageability -DaysInactive $DaystoConsiderAHostInactive -SearchBase $SearchBase
-            $computers = ($object.GetEnumerator()).computerName
-            $NonReachable = ($object.GetEnumerator()).NoRemoteAccess
+            $Params, $NoRemoteAccess = Get-ADHostManageability -DaysInactive $DaystoConsiderAHostInactive -SearchBase $SearchBase
+            if ($params.ComputerName) {
+                $computers = $Params.ComputerName
+                $NonReachable = $NoRemoteAccess.NoRemoteAcces
+            }
+            else {
+                Write-AuditLog "No computers were found to be online. Exiting."
+                break
+            }
         }
     } # End Begin Block
     process {
-        $results = Invoke-Command -ComputerName $computers -ScriptBlock ${Function:SearchForRegUninstallKey} -ArgumentList $AppNames, $IncludeWow6432Node
+        try {
+            Write-AuditLog -Message "Invoking command on remote computers." -Severity "Information"
+            Write-AuditLog -Message "The computers are: `n$(($Computers -join ", "))" -Severity "Information"
+            $results = Invoke-Command -ComputerName $computers -ScriptBlock ${Function:SearchForRegUninstallKey} -ArgumentList $AppNames, $IncludeWow6432Node
+        }
+        catch {
+            Write-AuditLog -Message "An error occurred while invoking the command on remote computers: $_" -Severity "Error"
+        }
     } # End Process Block
     end {
-        if ($Report) {
-            if ($ComputerNames) {
-                $results | Export-Csv "$DirPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\ADAppInstallStatus.csv" -NoTypeInformation
-            } # End If $ComputerNames
-            else {
-                $computers | Out-File "$DirPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\ReachableHosts.txt" -NoTypeInformation
-                $NonReachable | Out-File "$DirPath\$((Get-Date).ToString('yyyy-MM_dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\NonReachableHosts.txt" -NoTypeInformation
-                $results | Export-Csv "$DirPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\ADAppInstallStatus.csv" -NoTypeInformation
-            }
-        } # End If $Report
+        try {
+            if ($Report) {
+                if ($ComputerNames) {
+                    $results | Export-Csv "$DirPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\ADAppInstallStatus.csv" -NoTypeInformation
+                } # End If $ComputerNames
+                else {
+                    $computers | Out-File "$DirPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\ReachableHosts.txt" -NoTypeInformation
+                    $NonReachable | Out-File "$DirPath\$((Get-Date).ToString('yyyy-MM_dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\NonReachableHosts.txt" -NoTypeInformation
+                    $results | Export-Csv "$DirPath\$((Get-Date).ToString('yyyy-MM-dd_hh.mm.ss'))_$($env:USERDNSDOMAIN)\ADAppInstallStatus.csv" -NoTypeInformation
+                }
+            } # End If $Report
+        }
+        catch {
+            Write-AuditLog -Message "An error occurred during the end block of Find-ADHostApp: $_" -Severity "Error"
+        }
+        Write-AuditLog -EndFunction
         return $results
     } #End Block
 }
