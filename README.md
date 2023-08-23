@@ -1,5 +1,4 @@
 # ADAPPFinder Module
-[![PSScriptAnalyzer](https://github.com/CriticalSolutionsNetwork/ADAppFinder/actions/workflows/powershell.yml/badge.svg)](https://github.com/CriticalSolutionsNetwork/ADAppFinder/actions/workflows/powershell.yml)
 ## Find-ADHostApp
 ### Synopsis
 Searches AD Computers uninstall registry nodes for input Strings for installed app finding.
@@ -8,15 +7,13 @@ Searches AD Computers uninstall registry nodes for input Strings for installed a
 
 Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-SearchServers] [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
-Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
+Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-SearchBase] <String> [-Filter] <String> [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
 Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-SearchOSString] <String> [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
 Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-SearchWorkstations] [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
 Find-ADHostApp [-AppNames] <String[]> [-ComputerNames] <String[]> [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
-
-Find-ADHostApp [-AppNames] <String[]> [-SearchBase] <String> [-Filter] <String> [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
 
 
@@ -32,7 +29,7 @@ Find-ADHostApp [-AppNames] <String[]> [-SearchBase] <String> [-Filter] <String> 
 | <nobr>SearchOSString</nobr> |  |  | true | false |  |
 | <nobr>ComputerNames</nobr> |  |  | true | false |  |
 | <nobr>SearchBase</nobr> |  |  | true | false |  |
-| <nobr>Filter</nobr> |  |  | true | false | \* |
+| <nobr>Filter</nobr> |  |  | true | false | \\* |
 | <nobr>Report</nobr> |  |  | false | false | False |
 | <nobr>DirPath</nobr> |  |  | false | false | C:\\Temp\\ |
 | <nobr>IncludeWow6432Node</nobr> |  |  | false | false | False |
@@ -54,7 +51,7 @@ Wow6432Node?   : Missing: Adobe
 PSComputerName : pdc-00
 RunspaceId     : 47d370fb-f095-4bcf-a036-40997cb5af12
 ```
-GUID           : \{F1BECD79-0887-4630-957B-108C894264AD\}  
+GUID           : \{F1BECD79-0887-4630-957B-108C894264AD\\}  
 DisplayName    : Microsoft Azure AD Connect Health agent for AD DS  
 DisplayVersion : 3.1.77.0  
 Wow6432Node?   : No  
@@ -63,4 +60,4 @@ RunspaceId     : 47d370fb-f095-4bcf-a036-40997cb5af12
 
 ### Links
 
- - 
+ - [Specify a URI to a help page, this will show when Get-Help -Online is used.](#Specify a URI to a help page, this will show when Get-Help -Online is used.)
