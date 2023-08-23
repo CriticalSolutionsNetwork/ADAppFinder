@@ -5,32 +5,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
-
-- 32 bit search fixed
-
-## [0.1.0-fix0001] - 2022-10-30
-
 ### Added
 
-- First Build.
-
-### Changed
-
-- For changes in existing functionality.
-
-### Deprecated
-
-- For soon-to-be removed features.
-
-### Removed
-
-- For now removed features.
+- Added log function to ADAppFinder.
 
 ### Fixed
 
-- For any bug fix.
+- Fixed search when returned value is null.
 
-### Security
+## [0.1.1] - 2022-12-02
 
-- In case of vulnerabilities.
+### Fixed
+
+- Release fix.
+
+## [0.1.0] - 2022-11-17
+
+### Fixed
+
+- Release fix
