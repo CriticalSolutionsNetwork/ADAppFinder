@@ -169,6 +169,10 @@ function Find-ADHostApp {
         }
         # Logging message about local machine scanning
         if ($Local) {
+            if (!(Test-IsAdmin)) {
+                Write-AuditLog -Message "The user must be running as administrator to scan the local machine. Exiting." -Severity Error
+                break
+            }
             Write-AuditLog -Message "Local switch was used. Only the local computer will be scanned."
         }
         else {
