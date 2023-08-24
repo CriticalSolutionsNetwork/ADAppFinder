@@ -13,7 +13,9 @@ Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [
 
 Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-SearchWorkstations] [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
-Find-ADHostApp [-AppNames] <String[]> [-ComputerNames] <String[]> [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
+Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-ComputerNames] <String[]> [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
+
+Find-ADHostApp [-AppNames] <String[]> [[-DaystoConsiderAHostInactive] <Int32>] [-Local] [-Report] [-DirPath <String>] [-IncludeWow6432Node] [<CommonParameters>]
 
 
 
@@ -22,17 +24,18 @@ Find-ADHostApp [-AppNames] <String[]> [-ComputerNames] <String[]> [-Report] [-Di
 ### Parameters
 | Name  | Alias  | Description | Required? | Pipeline Input | Default Value |
 | - | - | - | - | - | - |
-| <nobr>AppNames</nobr> |  |  | true | false |  |
-| <nobr>DaystoConsiderAHostInactive</nobr> |  |  | false | false | 90 |
-| <nobr>SearchServers</nobr> |  |  | true | false | False |
-| <nobr>SearchWorkstations</nobr> |  |  | true | false | False |
-| <nobr>SearchOSString</nobr> |  |  | true | false |  |
-| <nobr>ComputerNames</nobr> |  |  | true | false |  |
-| <nobr>SearchBase</nobr> |  |  | true | false |  |
-| <nobr>Filter</nobr> |  |  | true | false | \\* |
-| <nobr>Report</nobr> |  |  | false | false | False |
-| <nobr>DirPath</nobr> |  |  | false | false | C:\\Temp\\ |
-| <nobr>IncludeWow6432Node</nobr> |  |  | false | false | False |
+| <nobr>AppNames</nobr> |  | Array of one or more strings to search for apps: "Spiceworks","Microsoft","Adobe". | true | false |  |
+| <nobr>DaystoConsiderAHostInactive</nobr> |  | How many days back to consider an AD Computer last sign in as active. | false | false | 90 |
+| <nobr>SearchServers</nobr> |  | Enter one or more filenames. | true | false | False |
+| <nobr>SearchBase</nobr> |  | Search a specific Organizational Unit: "OU=Infrastructure,OU=CorpComputers,DC=ad,DC=fabuloso,DC=com". | true | false |  |
+| <nobr>Filter</nobr> |  | Use a standard Filter: "Name -like "\\*PDC\\*"". Defaults to Wildcard. | true | false | \\* |
+| <nobr>SearchOSString</nobr> |  | Search using custom OS Search String. | true | false |  |
+| <nobr>SearchWorkstations</nobr> |  | Search Windows 10 and 11 workstations. | true | false | False |
+| <nobr>ComputerNames</nobr> |  | Search using specific hosts assumed to be online. | true | false |  |
+| <nobr>Local</nobr> |  | Include the local machine in the scan. If set, ONLY the local computer will be scanned. | true | false | False |
+| <nobr>Report</nobr> |  | Enable this switch to output a CSV Report. | false | false | False |
+| <nobr>DirPath</nobr> |  | Enter the working directory you wish the report to save to. Default creates C:\\temp. | false | false | C:\\Temp\\ |
+| <nobr>IncludeWow6432Node</nobr> |  | Also Search Wow6432Node. | false | false | False |
 ### Outputs
  - System.Management.Automation.PSCustomObject
 
@@ -51,7 +54,7 @@ Wow6432Node?   : Missing: Adobe
 PSComputerName : pdc-00
 RunspaceId     : 47d370fb-f095-4bcf-a036-40997cb5af12
 ```
-GUID           : \{F1BECD79-0887-4630-957B-108C894264AD\\}  
+GUID           : \\{F1BECD79-0887-4630-957B-108C894264AD\\}  
 DisplayName    : Microsoft Azure AD Connect Health agent for AD DS  
 DisplayVersion : 3.1.77.0  
 Wow6432Node?   : No  
@@ -60,4 +63,4 @@ RunspaceId     : 47d370fb-f095-4bcf-a036-40997cb5af12
 
 ### Links
 
- - [Specify a URI to a help page, this will show when Get-Help -Online is used.](#Specify a URI to a help page, this will show when Get-Help -Online is used.)
+ - [https://criticalsolutionsnetwork.github.io/ADAppFinder](https://criticalsolutionsnetwork.github.io/ADAppFinder)
