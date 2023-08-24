@@ -2,6 +2,12 @@
 
 ### Added
 
+- Added switch to scan for apps on the Local machine only.
+
+## [0.1.2] - 2023-08-23
+
+### Added
+
 - Added log function to ADAppFinder.
 
 ### Fixed
