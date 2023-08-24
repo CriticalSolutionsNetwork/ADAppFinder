@@ -3,6 +3,7 @@
 ### Added
 
 - Added switch to scan for apps on the Local machine only.
+- Added test for admin when local
 
 ## [0.1.2] - 2023-08-23
 
